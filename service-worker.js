@@ -1,4 +1,4 @@
-const CACHE_NAME = 'jansip-frame-studio-v1';
+const CACHE_NAME = 'jansip-frame-studio-v2';
 const APP_SHELL = [
   './',
   './index.html',
