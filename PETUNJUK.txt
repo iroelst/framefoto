@@ -1,0 +1,19 @@
+JANSIP FRAME STUDIO — PWA
+
+Isi folder:
+- index.html: aplikasi HTML dengan tautan manifest dan pendaftaran service worker
+- manifest.json: nama, tampilan, warna, dan ikon aplikasi
+- service-worker.js: cache app shell untuk membantu aplikasi dibuka saat offline
+- icons/: ikon 192x192 dan 512x512
+
+CARA UPLOAD KE GITHUB PAGES
+1. Ekstrak ZIP ini.
+2. Unggah SEMUA isi folder (index.html, manifest.json, service-worker.js, folder icons) ke folder/root publik repository yang sama.
+3. Pastikan nama file halaman adalah index.html.
+4. Buka Settings > Pages, aktifkan GitHub Pages untuk branch dan folder tersebut.
+5. Buka URL HTTPS GitHub Pages. Muat ulang sekali, lalu gunakan menu browser "Tambahkan ke layar utama" / "Install app".
+
+Catatan:
+- Jangan hanya mengunggah index.html; file manifest, service worker, dan folder icons harus ikut.
+- Jalur file dibuat relatif agar cocok untuk URL GitHub Pages project (subfolder).
+- Service worker baru aktif setelah aplikasi dibuka melalui HTTPS atau localhost. Setelah pembaruan versi, naikkan CACHE_NAME di service-worker.js bila cache lama masih tertahan.
