@@ -1,9 +1,7 @@
 {
-  "id": "./",
   "name": "JANSIP Frame Studio — BUMDesa Kemirigede",
   "short_name": "Frame Studio",
   "description": "Buat foto kegiatan BUMDesa Kemirigede dengan frame resmi.",
-  "lang": "id-ID",
   "start_url": "/framefoto/index.html",
   "display": "standalone",
   "orientation": "portrait",
