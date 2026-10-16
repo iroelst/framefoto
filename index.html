@@ -176,4 +176,63 @@ if ('serviceWorker' in navigator) {
   });
 }
 </script>
+
+<style>
+/* Tombol instalasi PWA Frame Studio */
+#frameStudioInstallBtn{position:fixed;right:14px;bottom:calc(14px + env(safe-area-inset-bottom,0px));z-index:99999;display:flex;align-items:center;gap:8px;border:0;border-radius:999px;padding:12px 16px;background:#063783;color:#fff;font:600 14px/1.2 system-ui,-apple-system,Segoe UI,sans-serif;box-shadow:0 5px 18px rgba(0,0,0,.24);cursor:pointer}
+#frameStudioInstallBtn[hidden]{display:none}
+#frameStudioInstallMsg{position:fixed;left:14px;right:14px;bottom:calc(68px + env(safe-area-inset-bottom,0px));z-index:100000;display:none;padding:12px 14px;border-radius:12px;background:#172033;color:#fff;font:13px/1.45 system-ui,-apple-system,Segoe UI,sans-serif;box-shadow:0 5px 18px rgba(0,0,0,.2)}
+#frameStudioInstallMsg.show{display:block}
+@media print{#frameStudioInstallBtn,#frameStudioInstallMsg{display:none!important}}
+</style>
+<button id="frameStudioInstallBtn" type="button" aria-label="Instal Frame Studio">⬇ Instal Frame Studio</button>
+<div id="frameStudioInstallMsg" role="status" aria-live="polite"></div>
+<script>
+(() => {
+  const installBtn = document.getElementById('frameStudioInstallBtn');
+  const message = document.getElementById('frameStudioInstallMsg');
+  let installPromptEvent = null;
+  let messageTimer = null;
+  function showMessage(text) {
+    message.textContent = text;
+    message.classList.add('show');
+    clearTimeout(messageTimer);
+    messageTimer = setTimeout(() => message.classList.remove('show'), 6500);
+  }
+  window.addEventListener('beforeinstallprompt', (event) => {
+    event.preventDefault();
+    installPromptEvent = event;
+    installBtn.hidden = false;
+  });
+  window.addEventListener('appinstalled', () => {
+    installPromptEvent = null;
+    installBtn.hidden = true;
+    showMessage('Frame Studio berhasil diinstal.');
+  });
+  installBtn.addEventListener('click', async () => {
+    if (!installPromptEvent) {
+      showMessage('Chrome belum menyediakan dialog instalasi untuk halaman ini. Pastikan halaman dibuka langsung melalui Chrome dan tunggu beberapa detik. Jika tetap sama, masalahnya berada pada pengenalan instalasi Chrome, bukan tombol ini.');
+      return;
+    }
+    const promptEvent = installPromptEvent;
+    installPromptEvent = null;
+    try {
+      await promptEvent.prompt();
+      const choice = await promptEvent.userChoice;
+      if (choice && choice.outcome === 'accepted') {
+        installBtn.hidden = true;
+        showMessage('Permintaan instalasi dikirim ke Chrome. Ikuti petunjuk yang muncul.');
+      } else {
+        showMessage('Instalasi belum dilakukan. Anda bisa mencoba lagi jika Chrome menyediakan opsi instalasi.');
+      }
+    } catch (error) {
+      console.warn('Prompt instalasi Frame Studio gagal:', error);
+      showMessage('Chrome gagal membuka dialog instalasi. Jangan hapus aplikasi lain; kita perlu memeriksa status PWA di Chrome.');
+    }
+  });
+  // Tombol tetap terlihat sebagai alat diagnosis jika Chrome tidak mengirim event instalasi.
+  installBtn.hidden = false;
+})();
+</script>
+
 </body></html>
