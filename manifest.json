@@ -1,8 +1,10 @@
 {
+  "id": "/framefoto/",
   "name": "Frame Studio",
   "short_name": "Frame Studio",
   "description": "Buat foto kegiatan BUMDesa Kemirigede dengan frame resmi.",
-  "start_url": "/framefoto/index.html",
+  "start_url": "./",
+  "scope": "./",
   "display": "standalone",
   "orientation": "portrait",
   "background_color": "#f3f7fc",
